@@ -1,0 +1,14 @@
+{
+    "entity": {
+      "light": {
+        "ambilight": {
+          "default": "mdi:television-ambient-light"
+        }
+      },
+      "sensor": {
+        "ambilight_measured_color": {
+          "default": "mdi:palette"
+        }
+      }
+}
+}
