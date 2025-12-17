@@ -2,16 +2,18 @@
   "domain": "custom_ambilight",
   "name": "Custom Ambilight",
   "codeowners": [
-    "@aegjoyce"
+    "@hivsem"
   ],
   "config_flow": true,
   "dependencies": [],
-  "documentation": "https://www.home-assistant.io/integrations/custom_ambilight",
+  "documentation": "https://github.com/hivsem/test-ambilight",
   "homekit": {},
   "iot_class": "local_polling",
-  "issue_tracker": "https://github.com/aegjoyce/custom-ambilight/issues",
-  "requirements": [],
+  "issue_tracker": "https://github.com/hivsem/test-ambilight/issues",
+  "requirements": [
+    "httpx>=0.24.0"
+  ],
   "ssdp": [],
-  "version": "0.2.12",
+  "version": "0.3.0",
   "zeroconf": []
 }

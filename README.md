@@ -1,7 +1,9 @@
 # Custom Ambilight
 ### An integration for Home Assistant
 
-![stars](https://img.shields.io/github/stars/aegjoyce/custom-ambilight?style=flat&logo=github&logoColor=lightgrey&color=yellow) ![installation_badge](https://img.shields.io/badge/dynamic/json?color=41BDF5&logo=home-assistant&label=integration%20usage&suffix=%20installs&cacheSeconds=15600&url=https://analytics.home-assistant.io/custom_integrations.json&query=$.custom_ambilight.total) ![hassfest](https://github.com/aegjoyce/custom-ambilight/workflows/hassfest/badge.svg) ![hacs](https://github.com/aegjoyce/custom-ambilight/workflows/hacs/badge.svg)
+Fork of `aegjoyce/custom-ambilight` with support for reading current Ambilight colors via `GET /6/ambilight/measured`.
+
+Repository: https://github.com/hivsem/test-ambilight
 
 
 ### Why does this exist?
@@ -24,12 +26,20 @@ Currently this integration requires:
 
 It is also highly recommended to set up the Alexa app and follow the instructions to keep the TV connected even when off.
 
-Install via HACS, restart your Home Assistant, and then set up the Custom Ambilight integration in the UI.
+Install via HACS (custom repository) or copy files manually:
+
+- HACS: add this repository as a custom repository (type: Integration), install, restart Home Assistant.
+- Manual: copy `custom_components/custom_ambilight/` into your HA config at `config/custom_components/custom_ambilight/`, then restart Home Assistant.
+
+After restart: `Settings → Devices & services → Add integration → Custom Ambilight`.
+
+If the integration does not appear in the list, check `Settings → System → Logs`. A common reason is missing Python dependencies; this fork declares `httpx` in `custom_components/custom_ambilight/manifest.json` and HA should install it automatically on startup.
 
 ### Extras (measured colors)
 This fork also exposes the current Ambilight colors from `GET /6/ambilight/measured`:
 - Adds a sensor entity: `sensor.<...>_ambilight_measured_color` (state is `#rrggbb`, attributes include average RGB/HS and per-side averages).
 - Adds extra attributes on the light entity: `ambilight_measured_avg_rgb` and `ambilight_measured_avg_rgb_by_side`.
+ - Light entity reports `hs_color` even while effects are active (derived from measured colors), so it is not `null` in Developer Tools → States.
 
 ### Future plans
  - Automatic registration from IP address without having to get a username and password

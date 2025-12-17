@@ -7,7 +7,6 @@ from typing import Any
 
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives.padding import PKCS7
-import httpx
 
 from homeassistant.components.light import ATTR_BRIGHTNESS, ATTR_EFFECT, ATTR_HS_COLOR
 
@@ -60,13 +59,16 @@ class MyApi:
 
     def __init__(self, host: str, connection_type: str, username: str = None, password: str = None) -> None:
         """Initialise the API."""
+        import httpx
+
         self.host = host
         self.connection_type = connection_type
         self.username = username
         self.password = password
         self.url = f"{connection_type}://{host}:1926/6" if connection_type == "https" else f"http://{host}:1925/6"
-        self.client = httpx.AsyncClient(
-            auth=httpx.DigestAuth(username, password) if connection_type == "https" else None, verify=False
+        self._httpx = httpx
+        self.client = self._httpx.AsyncClient(
+            auth=self._httpx.DigestAuth(username, password) if connection_type == "https" else None, verify=False
         )
         self.EFFECTS = EFFECTS
         self.previous_state = None
@@ -100,8 +102,8 @@ class MyApi:
             }
             # Reset the connection
             await self.client.aclose()
-            self.client = httpx.AsyncClient(
-                auth=httpx.DigestAuth(self.username, self.password), verify=False
+            self.client = self._httpx.AsyncClient(
+                auth=self._httpx.DigestAuth(self.username, self.password), verify=False
             )
             # Restore the previous state
             if any(
