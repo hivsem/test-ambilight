@@ -54,6 +54,11 @@ def avg_rgb_by_side(measured: dict[str, Any]) -> dict[str, tuple[int, int, int] 
     return out
 
 
+def avg_rgb_for_side(measured: dict[str, Any], side: str) -> tuple[int, int, int] | None:
+    by_side = avg_rgb_by_side(measured)
+    return by_side.get(side)
+
+
 class MyApi:
     """The Custom Ambilight API."""
 

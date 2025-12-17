@@ -27,6 +27,12 @@
     "sensor": {
       "ambilight_measured_color": {
         "name": "Ambilight measured color"
+      },
+      "ambilight_measured_color_left": {
+        "name": "Ambilight measured color (left)"
+      },
+      "ambilight_measured_color_right": {
+        "name": "Ambilight measured color (right)"
       }
     }
   }

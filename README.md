@@ -38,6 +38,7 @@ If the integration does not appear in the list, check `Settings → System → L
 ### Extras (measured colors)
 This fork also exposes the current Ambilight colors from `GET /6/ambilight/measured`:
 - Adds a sensor entity: `sensor.<...>_ambilight_measured_color` (state is `#rrggbb`, attributes include average RGB/HS and per-side averages).
+- Adds left/right sensors: `sensor.<...>_ambilight_measured_color_left` and `sensor.<...>_ambilight_measured_color_right` (state is `#rrggbb`).
 - Adds extra attributes on the light entity: `ambilight_measured_avg_rgb` and `ambilight_measured_avg_rgb_by_side`.
  - Light entity reports `hs_color` even while effects are active (derived from measured colors), so it is not `null` in Developer Tools → States.
 

@@ -44,7 +44,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         _LOGGER,
         name="custom_ambilight_measured",
         update_method=api.get_measured,
-        update_interval=timedelta(seconds=5),
+        update_interval=timedelta(seconds=0.5),
     )
 
     config_coordinator.api = api
