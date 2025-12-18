@@ -9,7 +9,7 @@ from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from homeassistant.util.color import color_RGB_to_hs
 
-from .api import avg_rgb, avg_rgb_by_side, avg_rgb_for_side
+from .api import avg_rgb, avg_rgb_by_side, avg_rgb_for_side, center_rgb_for_side
 from .const import DOMAIN
 
 
@@ -97,7 +97,7 @@ class CustomAmbilightMeasuredSideColorSensor(CoordinatorEntity, SensorEntity):
         data = self.coordinator.data
         if not isinstance(data, dict):
             return None
-        rgb = avg_rgb_for_side(data, self._side)
+        rgb = center_rgb_for_side(data, self._side)
         if rgb is None:
             return None
         r, g, b = rgb
@@ -108,7 +108,7 @@ class CustomAmbilightMeasuredSideColorSensor(CoordinatorEntity, SensorEntity):
         data = self.coordinator.data
         if not isinstance(data, dict):
             return {}
-        rgb = avg_rgb_for_side(data, self._side)
+        rgb = center_rgb_for_side(data, self._side)
         if rgb is None:
             return {}
         r, g, b = rgb

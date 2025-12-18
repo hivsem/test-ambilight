@@ -59,6 +59,37 @@ def avg_rgb_for_side(measured: dict[str, Any], side: str) -> tuple[int, int, int
     return by_side.get(side)
 
 
+def center_rgb_for_side(measured: dict[str, Any], side: str) -> tuple[int, int, int] | None:
+    """Return the middle LED color for the given side, if available."""
+    layer1 = measured.get("layer1")
+    if not isinstance(layer1, dict):
+        return None
+    side_data = layer1.get(side)
+    rgb_values: list[tuple[int, int, int]] = []
+
+    def _append_rgb(val: Any, index: int | None = None):
+        if isinstance(val, dict) and set(val.keys()) >= {"r", "g", "b"}:
+            r, g, b = val.get("r"), val.get("g"), val.get("b")
+            if all(isinstance(v, int) for v in (r, g, b)):
+                rgb_values.append(((index if index is not None else len(rgb_values)), (r, g, b)))
+
+    if isinstance(side_data, dict):
+        for key, val in side_data.items():
+            idx = int(key) if isinstance(key, str) and key.isdigit() else None
+            _append_rgb(val, idx)
+    elif isinstance(side_data, list):
+        for idx, val in enumerate(side_data):
+            _append_rgb(val, idx)
+
+    if not rgb_values:
+        return None
+
+    # Sort by index if present to keep spatial ordering consistent
+    rgb_values.sort(key=lambda item: item[0])
+    _, middle_rgb = rgb_values[len(rgb_values) // 2]
+    return middle_rgb
+
+
 class MyApi:
     """The Custom Ambilight API."""
 

@@ -14,7 +14,7 @@ from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from homeassistant.util.color import color_RGB_to_hs
 
-from .api import avg_rgb, avg_rgb_by_side, avg_rgb_for_side
+from .api import avg_rgb, avg_rgb_by_side, avg_rgb_for_side, center_rgb_for_side
 from .const import DOMAIN
 
 
@@ -94,12 +94,12 @@ class CustomAmbilightLight(CoordinatorEntity, LightEntity):
             overall = avg_rgb(measured)
             if overall is not None:
                 attrs["ambilight_measured_avg_rgb"] = list(overall)
-            left = avg_rgb_for_side(measured, "left")
+            left = center_rgb_for_side(measured, "left")
             if left is not None:
-                attrs["ambilight_measured_left_avg_rgb"] = list(left)
-            right = avg_rgb_for_side(measured, "right")
+                attrs["ambilight_measured_left_rgb"] = list(left)
+            right = center_rgb_for_side(measured, "right")
             if right is not None:
-                attrs["ambilight_measured_right_avg_rgb"] = list(right)
+                attrs["ambilight_measured_right_rgb"] = list(right)
             by_side = avg_rgb_by_side(measured)
             if by_side:
                 attrs["ambilight_measured_avg_rgb_by_side"] = {
